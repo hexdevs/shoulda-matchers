@@ -33,6 +33,8 @@ appraise 'rails_7_1' do
   gem 'benchmark'
   gem 'cgi'
 
+  gem 'minitest', '~> 5.1'
+
   # test dependencies
   gem 'rspec-rails', '~> 6.0'
   gem 'shoulda-context', '~> 2.0.0'

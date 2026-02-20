@@ -19,9 +19,7 @@ rails 7_1
 
 todo:
 
-- run specs for all gemfiles (minitest version constraint needed?)
-- push and see how it goes in CI
-- update rubocop ruby target
+- 7_2 and 8_0 require benchmark through activesupport
 
 
 removed --install binstubs to get rid of this warning message. Since it's
