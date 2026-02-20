@@ -9,7 +9,6 @@ require 'yaml'
 
 module UnitTests
   class RailsApplication
-
     include RubyVersions
 
     def initialize
