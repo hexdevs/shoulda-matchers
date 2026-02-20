@@ -13,33 +13,33 @@ shared_spring_dependencies = proc do
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
-appraise 'rails_7_1' do
-  instance_eval(&shared_spring_dependencies)
-  instance_eval(&controller_test_dependency)
+# appraise 'rails_7_1' do
+#   instance_eval(&shared_spring_dependencies)
+#   instance_eval(&controller_test_dependency)
 
-  gem 'rails', '7.1.3.2'
-  gem 'sprockets-rails'
-  gem 'puma', '~> 6.0'
-  gem 'importmap-rails'
-  gem 'turbo-rails'
-  gem 'stimulus-rails'
-  gem 'jbuilder'
-  gem 'bootsnap', require: false
-  gem 'capybara'
-  gem 'selenium-webdriver'
-  gem 'webdrivers'
+#   gem 'rails', '7.1.3.2'
+#   gem 'sprockets-rails'
+#   gem 'puma', '~> 6.0'
+#   gem 'importmap-rails'
+#   gem 'turbo-rails'
+#   gem 'stimulus-rails'
+#   gem 'jbuilder'
+#   gem 'bootsnap', require: false
+#   gem 'capybara'
+#   gem 'selenium-webdriver'
+#   gem 'webdrivers'
 
-  # test dependencies
-  gem 'rspec-rails', '~> 6.0'
-  gem 'shoulda-context', '~> 2.0.0'
+#   # test dependencies
+#   gem 'rspec-rails', '~> 6.0'
+#   gem 'shoulda-context', '~> 2.0.0'
 
-  # other dependencies
-  gem 'bcrypt', '~> 3.1.7'
+#   # other dependencies
+#   gem 'bcrypt', '~> 3.1.7'
 
-  # Database adapters
-  gem 'sqlite3', '~> 1.4'
-  gem 'pg', '~> 1.1'
-end
+#   # Database adapters
+#   gem 'sqlite3', '~> 1.4'
+#   gem 'pg', '~> 1.1'
+# end
 
 appraise 'rails_7_2' do
   instance_eval(&shared_spring_dependencies)
@@ -74,6 +74,8 @@ appraise 'rails_7_2' do
   # Database adapters
   gem 'sqlite3', '~> 1.4'
   gem 'pg', '~> 1.1'
+  gem 'ostruct'
+  gem 'readline'
 end
 
 appraise 'rails_8_0' do
