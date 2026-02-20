@@ -145,6 +145,7 @@ appraise 'rails_8_1' do
   gem 'thruster'
   gem 'image_processing', '~> 1.2'
   gem 'bundler-audit'
+  gem 'readline'
 
   # test dependencies
   gem 'rspec-rails', '~> 6.0'
