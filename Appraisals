@@ -34,6 +34,7 @@ appraise 'rails_7_1' do
   # test dependencies
   gem 'rspec-rails', '~> 6.0'
   gem 'shoulda-context', '~> 2.0.0'
+  gem 'minitest', '~> 5.26.1'
 
   # other dependencies
   gem 'bcrypt', '~> 3.1.7'
@@ -107,6 +108,7 @@ appraise 'rails_8_0' do
   gem 'solid_cable'
   gem 'kamal'
   gem 'thruster'
+  gem 'readline'
 
   # test dependencies
   gem 'rspec-rails', '~> 6.0'
