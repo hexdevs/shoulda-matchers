@@ -18,13 +18,6 @@ appraise 'rails_7_1' do
   instance_eval(&controller_test_dependency)
 
   gem 'rails', '7.1.3.2'
-
-  # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
-  gem 'brakeman', require: false
-
-  # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
-  gem 'rubocop-rails-omakase', require: false
-
   gem 'sprockets-rails'
   gem 'puma', '~> 6.0'
   gem 'importmap-rails'
