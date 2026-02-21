@@ -39,7 +39,8 @@ jobs:
         adapter:
           - sqlite3
           - postgresql
-        # exclude:
+        exclude:
+          - { ruby: 4.0.1, appraisal: rails_7_1 }
           # - { ruby: 3.2.9, appraisal: rails_8_1 }
           # - { ruby: 3.1.7, appraisal: rails_8_1 }
           # - { ruby: 3.0.7, appraisal: rails_8_1 }
