@@ -528,6 +528,93 @@ describe Shoulda::Matchers::ActiveRecord::DefineEnumForMatcher, type: :model do
         end
       end
     end
+
+    it 'matches when there are different attributes with the same enum values with different prefixes' do
+      STATUSES = { pending: 'pending', denied: 'denied', agreed: 'agreed' }
+
+      record = build_record_with_hash_values(
+        model_name: 'ContactSuggestion',
+        attribute_name: :candidate_user_status,
+        column_type: :string,
+        values: STATUSES,
+        prefix: :user
+      )
+
+      another_record = build_record_with_hash_values(
+        model_name: 'ContactSuggestion',
+        attribute_name: :candidate_contact_status,
+        column_type: :string,
+        values: STATUSES,
+        prefix: :contact
+      )
+
+      user_matcher = define_enum_for(:candidate_user_status).
+        backed_by_column_of_type(:string).
+        with_values(STATUSES).
+        with_prefix(:user)
+
+      contact_matcher = define_enum_for(:candidate_contact_status).
+        backed_by_column_of_type(:string).
+        with_values(STATUSES).
+        with_prefix(:contact)
+
+      expect(user_matcher.description).to eq(<<~MESSAGE.strip)
+        define :candidate_user_status as an enum backed by a string with values ‹{pending: \"pending\", denied: \"denied\", agreed: \"agreed\"}›, prefix: :user
+      MESSAGE
+
+      expect(contact_matcher.description).to eq(<<~MESSAGE.strip)
+        define :candidate_contact_status as an enum backed by a string with values ‹{pending: \"pending\", denied: \"denied\", agreed: \"agreed\"}›, prefix: :contact
+      MESSAGE
+
+      # this fails but shouldn't according to the bug report, expects prefix to be `contact`; can't reproduce
+      expect(contact_matcher.description).to eq(<<~MESSAGE.strip)
+        define :candidate_contact_status as an enum backed by a string with values ‹{pending: \"pending\", denied: \"denied\", agreed: \"agreed\"}›, prefix: :user
+      MESSAGE
+    end
+
+    it 'fails when there are different attributes with similar enum values with different prefixes' do
+      USER_STATUSES = { pending: 'pending', denied: 'denied', agreed: 'agreed' }
+      CANDIDATE_STATUSES = { a_different_value: 'testing', pending: 'pending', denied: 'denied', agreed: 'agreed' }
+
+      record = build_record_with_hash_values(
+        model_name: 'ContactSuggestion',
+        attribute_name: :candidate_user_status,
+        column_type: :string,
+        values: USER_STATUSES,
+        prefix: :user
+      )
+
+      another_record = build_record_with_hash_values(
+        model_name: 'ContactSuggestion',
+        attribute_name: :candidate_contact_status,
+        column_type: :string,
+        values: CANDIDATE_STATUSES,
+        prefix: :contact
+      )
+
+      user_matcher = define_enum_for(:candidate_user_status).
+        backed_by_column_of_type(:string).
+        with_values(USER_STATUSES).
+        with_prefix(:user)
+
+      contact_matcher = define_enum_for(:candidate_contact_status).
+        backed_by_column_of_type(:string).
+        with_values(CANDIDATE_STATUSES).
+        with_prefix(:contact)
+
+      expect(user_matcher.description).to eq(<<~MESSAGE.strip)
+        define :candidate_user_status as an enum backed by a string with values ‹{pending: \"pending\", denied: \"denied\", agreed: \"agreed\"}›, prefix: :user
+      MESSAGE
+
+      expect(contact_matcher.description).to eq(<<~MESSAGE.strip)
+        define :candidate_contact_status as an enum backed by a string with values ‹{a_different_value: \"testing\", pending: \"pending\", denied: \"denied\", agreed: \"agreed\"}›, prefix: :contact
+      MESSAGE
+
+      # this fails but shouldn't according to the bug report, expects prefix to be `contact`; can't reproduce
+      expect(contact_matcher.description).to eq(<<~MESSAGE.strip)
+        define :candidate_contact_status as an enum backed by a string with values ‹{a_different_value: \"testing\", pending: \"pending\", denied: \"denied\", agreed: \"agreed\"}›, prefix: :user
+      MESSAGE
+    end
   end
 
   context 'qualified with #with_suffix' do
@@ -1451,12 +1538,13 @@ describe Shoulda::Matchers::ActiveRecord::DefineEnumForMatcher, type: :model do
     prefix: false,
     suffix: false,
     default: nil,
-    validate: false
+    validate: false,
+    column_type: :integer
   )
     build_record_with_enum_attribute(
       model_name:,
       attribute_name:,
-      column_type: :integer,
+      column_type:,
       values:,
       prefix:,
       suffix:,
